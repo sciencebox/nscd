@@ -8,4 +8,4 @@ RUN yum -y install \
     yum clean all && \
     rm -rf /var/cache/yum
 
-CMD ["/usr/sbin/nscd", "--foreground"]
+CMD ["/usr/sbin/nscd", "--foreground", "--debug"]
