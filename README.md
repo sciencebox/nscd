@@ -12,3 +12,12 @@ Docker image to provide the NSCD service.
 - To do so, mount `/run/nscd` as volume;
 - Other containers can mount it with the option `--volumes-from <nscd_server_name>`.
 
+### Providing access to LDAP to other containers
+- Typically, `nscd` and `nslcd` are used to access LDAP in order to retrieve information on user accounts;
+- In traditional environment, the two services run on the host machine as system daemons. In the world of containers, `nscd` and `nslcd` run in two dedicated containers;
+- To allow LDAP access to a third container, proceed as follows:
+  1. `nslcd`: Export the `nslcd` socket to a volume;
+  2. `nscd`: Mount the volume with the `nslcd` socket into the `nscd` container;
+  3. `nscd`: Export the `nscd` socket to a volume;
+  4. `other containers`: Mount the volume with the `nscd` socket.
+
